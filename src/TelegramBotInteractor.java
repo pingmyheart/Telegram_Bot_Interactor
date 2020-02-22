@@ -41,7 +41,12 @@ public class TelegramBotInteractor{
             case "1":
                 System.out.println("Type bot token");
                 if (setBotToken(in.nextLine())) {
-                    System.out.println("Token Successfully Setted");
+                    if(isBotTokenValid()){
+                        System.out.println("Token Successfully Setted");
+                    }else{
+                        System.out.println("Error...Token Incorrect. Set it again");
+                        botToken = "";
+                    }
                 } else {
                     System.out.println("Token Already Setted");
                 }
@@ -67,7 +72,7 @@ public class TelegramBotInteractor{
                     System.out.println("Type Message To Be Sent");
                     sendMessage(in.nextLine());
                 }else{
-                    System.out.println("Bot Token and Chat ID not Setted");
+                    System.out.println("Bot Token or Chat ID Not Setted");
                 }
                 break;
             case "4":
@@ -83,14 +88,14 @@ public class TelegramBotInteractor{
                     address = in.nextLine();
                     sendVenue(latitude, longitude, title, address);
                 }else{
-                    System.out.println("Bot Token and Chat ID not Setted");
+                    System.out.println("Bot Token or Chat ID Not Setted");
                 }
                 break;
             case "5":
                 if(!botToken.equals("") && !chatID.equals("")){
                     sendDocument();
                 }else{
-                    System.out.println("Bot Token and Chat ID not Setted");
+                    System.out.println("Bot Token or Chat ID Not Setted");
                 }
                 break;
             case "99":
@@ -187,7 +192,11 @@ public class TelegramBotInteractor{
     //FUNCTION IMPLEMENTATION FOR DIFFERENT TYPE RESTAPI
     
     public static void sendMessage(String message)throws MalformedURLException, IOException{
-        getResponde(mainAPI + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + message, "POST");
+        if(message.length() <= 4096){
+            getResponde(mainAPI + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + message, "POST");
+        }else{
+            System.out.println("Bad Request: message is too long");
+        }
     }
 
     public static void sendVenue(String latitude, String longitude, String title, String address)throws MalformedURLException, IOException{
@@ -266,5 +275,15 @@ public class TelegramBotInteractor{
             return fc.getSelectedFile();
         }
         return null;
+    }
+
+    public static boolean isBotTokenValid()throws MalformedURLException, IOException{
+        String result = getResponde(mainAPI + botToken +  "/getUpdates", "POST");
+        JSONObject in = new JSONObject(result);
+        String isGood = in.get("ok").toString();
+        if(isGood.equals("true")){
+            return true;
+        }
+        return false;
     }
 }
