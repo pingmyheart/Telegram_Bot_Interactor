@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="TelegramBotInteractor:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="18925417-3afe-4349-bfe4-6c2a0e3c0f69" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +74,7 @@
       <workItem from="1582323185019" duration="3537000" />
       <workItem from="1582365649098" duration="38000" />
       <workItem from="1582366952937" duration="1263000" />
-      <workItem from="1582380327960" duration="53000" />
+      <workItem from="1582380327960" duration="295000" />
     </task>
     <servers />
   </component>
