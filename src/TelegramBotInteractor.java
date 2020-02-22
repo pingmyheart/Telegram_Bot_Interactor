@@ -245,10 +245,6 @@ public class TelegramBotInteractor{
         }
     }
 
-    /*public static void sendDocument()throws MalformedURLException, IOException{
-        getResponde(mainAPI + botToken + "/sendDocument?chat_id=" + chatID + "&document=" + getFileAbsolutePath(),"POST");
-    }*/
-
     public static File getFile(){
         JFileChooser fc = new JFileChooser();
 

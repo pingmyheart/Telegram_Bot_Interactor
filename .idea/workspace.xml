@@ -31,6 +31,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager" selected="Application.TelegramBotInteractor">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -74,7 +75,7 @@
       <workItem from="1582323185019" duration="3537000" />
       <workItem from="1582365649098" duration="38000" />
       <workItem from="1582366952937" duration="1263000" />
-      <workItem from="1582380327960" duration="295000" />
+      <workItem from="1582380327960" duration="650000" />
     </task>
     <servers />
   </component>
@@ -82,6 +83,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="275" y="22" key="#Notifications" timestamp="1582380960913">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1582380960913" />
     <state x="413" y="148" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1582380367015">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -90,26 +95,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="389" y="105" width="588" height="597" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582323320956" />
-    <state width="1323" height="214" key="GridCell.Tab.0.bottom" timestamp="1582368218538">
+    <state width="1323" height="214" key="GridCell.Tab.0.bottom" timestamp="1582380991303">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="214" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1582368218538" />
-    <state width="1323" height="214" key="GridCell.Tab.0.center" timestamp="1582368218538">
+    <state width="1323" height="214" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1582380991303" />
+    <state width="1323" height="214" key="GridCell.Tab.0.center" timestamp="1582380991303">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="214" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1582368218538" />
-    <state width="1323" height="214" key="GridCell.Tab.0.left" timestamp="1582368218537">
+    <state width="1323" height="214" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1582380991303" />
+    <state width="1323" height="214" key="GridCell.Tab.0.left" timestamp="1582380991302">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="214" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1582368218537" />
-    <state width="1323" height="214" key="GridCell.Tab.0.right" timestamp="1582368218538">
+    <state width="1323" height="214" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1582380991302" />
+    <state width="1323" height="214" key="GridCell.Tab.0.right" timestamp="1582380991303">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="214" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1582368218538" />
-    <state x="163" y="0" key="SettingsEditor" timestamp="1582380379490">
+    <state width="1323" height="214" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1582380991303" />
+    <state x="163" y="0" key="SettingsEditor" timestamp="1582380721775">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582380379490" />
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582380721775" />
     <state x="384" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1582380326902">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
