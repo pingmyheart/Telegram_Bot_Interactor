@@ -26,7 +26,7 @@ import org.json.*;
 public class TelegramBotInteractor{
 
     public static String botToken = "";//public string that will contains the token from the bot father
-    public static String chatID = "";//ID taken from the json
+    public static String chatID = "";//ID taken from the json returned from mainAPI+getUpdate
     public static String mainAPI = "https://api.telegram.org/bot";
 
     public static void main(String[] args)throws MalformedURLException, IOException{
@@ -51,8 +51,13 @@ public class TelegramBotInteractor{
                     System.out.println("Available Chats:");
                     System.out.println(getAvailableChats(getResponde(mainAPI + botToken + "/getUpdates", "POST")));
                     System.out.println("Type Chat Name");
-                    chatID = getChatId(botToken, in.nextLine(), getResponde(mainAPI + botToken + "/getUpdates", "POST"));
-                    System.out.println("Chat ID selected " + chatID);
+                    String tempChatID = getChatId(botToken, in.nextLine(), getResponde(mainAPI + botToken + "/getUpdates", "POST"));
+                    if(tempChatID == null){
+                        System.out.println("No ChatID selected");
+                    }else{
+                        chatID = tempChatID;
+                        System.out.println("Chat ID selected " + chatID);
+                    }
                 }else{
                     System.out.println("Bot Token Not Setted");
                 }
@@ -239,6 +244,10 @@ public class TelegramBotInteractor{
             return "Bot Token Not Setted";
         }
     }
+
+    /*public static void sendDocument()throws MalformedURLException, IOException{
+        getResponde(mainAPI + botToken + "/sendDocument?chat_id=" + chatID + "&document=" + getFileAbsolutePath(),"POST");
+    }*/
 
     public static File getFile(){
         JFileChooser fc = new JFileChooser();
