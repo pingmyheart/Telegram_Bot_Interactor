@@ -104,16 +104,24 @@ public class TelegramBotInteractor {
                         String phoneNumber = "";
                         System.out.println("Type the international prefix with + symbol");
                         phoneNumber = in.nextLine();
-                        if(!(phoneNumber.charAt(0) == '+')){
-                            phoneNumber = "+" + phoneNumber;
+                        if (phoneNumber.length() >= 2) {
+                            if (phoneNumber.charAt(0) == '0' && phoneNumber.charAt(1) == '0') {
+                                String tempPrefix = phoneNumber.substring(2, phoneNumber.length());
+                                phoneNumber = "+" + tempPrefix;
+                            } else if (!(phoneNumber.charAt(0) == '+')) {
+                                phoneNumber = "+" + phoneNumber;
+                            }
+                            System.out.println("Type phone number");
+                            phoneNumber = phoneNumber + in.nextLine();
+                            System.out.println("Type the first name");
+                            String firstName = in.nextLine();
+                            System.out.println("Type the last name");
+                            String lastName = in.nextLine();
+                            sendContact(phoneNumber, firstName, lastName);
+                        } else {
+                            System.out.println("Prefix Incorrect");
+
                         }
-                        System.out.println("Type phone number");
-                        phoneNumber = phoneNumber + in.nextLine();
-                        System.out.println("Type the first name");
-                        String firstName = in.nextLine();
-                        System.out.println("Type the last name");
-                        String lastName = in.nextLine();
-                        sendContact(phoneNumber, firstName, lastName);
                     } else {
                         System.out.println("Bot Token or Chat ID Not Setted");
                     }
@@ -248,7 +256,7 @@ public class TelegramBotInteractor {
         }
     }
 
-    public static void sendContact(String phoneNumber, String firstName, String lastName)throws MalformedURLException, IOException{
+    public static void sendContact(String phoneNumber, String firstName, String lastName) throws MalformedURLException, IOException {
         getResponde(mainAPI + botToken + "/sendContact?chat_id=" + chatID + "&phone_number=" + phoneNumber + "&first_name=" + firstName + "&last_name=" + lastName, "POST");
     }
 
