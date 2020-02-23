@@ -23,122 +23,143 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.*;
 //import sun.net.www.http.HttpClient;
 
-public class TelegramBotInteractor{
+public class TelegramBotInteractor {
 
     public static String botToken = "";//public string that will contains the token from the bot father
     public static String chatID = "";//ID taken from the json returned from mainAPI+getUpdate
     public static String mainAPI = "https://api.telegram.org/bot";
 
-    public static void main(String[] args)throws MalformedURLException, IOException{
+    public static void main(String[] args) throws MalformedURLException, IOException {
         Scanner in = new Scanner(System.in);
         boolean available = true;
         printCopyright();
-        while(available) {
+        while (available) {
             //clearScreen();
             printMenu();
             System.out.println("Select an option");
             switch (in.nextLine()) {
-            case "1":
-                System.out.println("Type bot token");
-                if (setBotToken(in.nextLine())) {
-                    if(isBotTokenValid()){
-                        System.out.println("Token Successfully Setted");
-                    }else{
-                        System.out.println("Error...Token Incorrect. Set it again");
-                        botToken = "";
+                case "1":
+                    System.out.println("Type bot token");
+                    if (setBotToken(in.nextLine())) {
+                        if (isBotTokenValid()) {
+                            System.out.println("Token Successfully Setted");
+                        } else {
+                            System.out.println("Error...Token Incorrect. Set it again");
+                            botToken = "";
+                        }
+                    } else {
+                        System.out.println("Token Already Setted");
                     }
-                } else {
-                    System.out.println("Token Already Setted");
-                }
-                break;
-            case "2":
-                if(!botToken.equals("")){
-                    System.out.println("Available Chats:");
-                    System.out.println(getAvailableChats(getResponde(mainAPI + botToken + "/getUpdates", "POST")));
-                    System.out.println("Type Chat Name");
-                    String tempChatID = getChatId(botToken, in.nextLine(), getResponde(mainAPI + botToken + "/getUpdates", "POST"));
-                    if(tempChatID == null){
-                        System.out.println("No ChatID selected");
-                    }else{
-                        chatID = tempChatID;
-                        System.out.println("Chat ID selected " + chatID);
+                    break;
+                case "2":
+                    if (!botToken.equals("")) {
+                        System.out.println("Available Chats:");
+                        System.out.println(getAvailableChats(getResponde(mainAPI + botToken + "/getUpdates", "POST")));
+                        System.out.println("Type Chat Name");
+                        String tempChatID = getChatId(botToken, in.nextLine(), getResponde(mainAPI + botToken + "/getUpdates", "POST"));
+                        if (tempChatID == null) {
+                            System.out.println("No ChatID selected");
+                            chatID = "";
+                        } else {
+                            chatID = tempChatID;
+                            System.out.println("Chat ID selected " + chatID);
+                        }
+                    } else {
+                        System.out.println("Bot Token Not Setted");
                     }
-                }else{
-                    System.out.println("Bot Token Not Setted");
-                }
-                break;
-            case "3":
-                if(!botToken.equals("") && !chatID.equals("")){
-                    System.out.println("Type Message To Be Sent");
-                    sendMessage(in.nextLine());
-                }else{
-                    System.out.println("Bot Token or Chat ID Not Setted");
-                }
-                break;
-            case "4":
-                if(!botToken.equals("") && !chatID.equals("")){
-                    String latitude, longitude, title, address;
-                    System.out.println("Type the latitude");
-                    latitude = in.nextLine().replaceAll(",", ".");
-                    System.out.println("Type the longitude");
-                    longitude = in.nextLine().replaceAll(",", ".");
-                    System.out.println("Type the title");
-                    title = in.nextLine();
-                    System.out.println("Type the address");
-                    address = in.nextLine();
-                    sendVenue(latitude, longitude, title, address);
-                }else{
-                    System.out.println("Bot Token or Chat ID Not Setted");
-                }
-                break;
-            case "5":
-                if(!botToken.equals("") && !chatID.equals("")){
-                    sendDocument();
-                }else{
-                    System.out.println("Bot Token or Chat ID Not Setted");
-                }
-                break;
-            case "99":
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you shure to perform the closing?", "WARNING", JOptionPane.YES_NO_OPTION);
-                if(dialogResult == JOptionPane.YES_OPTION){
-                    available = false;
-                }
-                break;
+                    break;
+                case "3":
+                    if (!botToken.equals("") && !chatID.equals("")) {
+                        System.out.println("Type Message To Be Sent");
+                        sendMessage(in.nextLine());
+                    } else {
+                        System.out.println("Bot Token or Chat ID Not Setted");
+                    }
+                    break;
+                case "4":
+                    if (!botToken.equals("") && !chatID.equals("")) {
+                        String latitude, longitude, title, address;
+                        System.out.println("Type the latitude");
+                        latitude = in.nextLine().replaceAll(",", ".");
+                        System.out.println("Type the longitude");
+                        longitude = in.nextLine().replaceAll(",", ".");
+                        System.out.println("Type the title");
+                        title = in.nextLine();
+                        System.out.println("Type the address");
+                        address = in.nextLine();
+                        sendVenue(latitude, longitude, title, address);
+                    } else {
+                        System.out.println("Bot Token or Chat ID Not Setted");
+                    }
+                    break;
+                case "5":
+                    if (!botToken.equals("") && !chatID.equals("")) {
+                        sendDocument();
+                    } else {
+                        System.out.println("Bot Token or Chat ID Not Setted");
+                    }
+                    break;
+                case "6":
+                    if (!botToken.equals("") && !chatID.equals("")) {
+                        String phoneNumber = "";
+                        System.out.println("Type the international prefix with + symbol");
+                        phoneNumber = in.nextLine();
+                        if(!(phoneNumber.charAt(0) == '+')){
+                            phoneNumber = "+" + phoneNumber;
+                        }
+                        System.out.println("Type phone number");
+                        phoneNumber = phoneNumber + in.nextLine();
+                        System.out.println("Type the first name");
+                        String firstName = in.nextLine();
+                        System.out.println("Type the last name");
+                        String lastName = in.nextLine();
+                        sendContact(phoneNumber, firstName, lastName);
+                    } else {
+                        System.out.println("Bot Token or Chat ID Not Setted");
+                    }
+                    break;
+                case "99":
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Are you shure to perform the closing?", "WARNING", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        available = false;
+                    }
+                    break;
                 default:
-                System.out.println("Not Supported Operation");
+                    System.out.println("Not Supported Operation");
             }
         }
         System.out.println("\nSee You Soon");
         in.close();
     }
 
-    public static void clearScreen() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
-    }  
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 
-    public static void printMenu(){
+    public static void printMenu() {
         System.out.println("\n1->Set Bot Token");
         System.out.println("2->Set Chat Name(Case Sensitive)");
         System.out.println("3->Send Message");
         System.out.println("4->Send Venue");
         System.out.println("5->Send Document");
+        System.out.println("6->Send Contact");
         System.out.println("99->Close Application");
     }
 
-    public static void printCopyright(){
+    public static void printCopyright() {
         System.out.println("\t\t\tCopyright © 2020 Alusoft s.r.l. All right reserved\n");
     }
 
-    public static boolean setBotToken(String token){
-        if(botToken.equals("")){
+    public static boolean setBotToken(String token) {
+        if (botToken.equals("")) {
             botToken = token;
             return true;
         }
         return false;
     }
 
-    public static String getResponde(String url, String method)throws MalformedURLException, IOException{
+    public static String getResponde(String url, String method) throws MalformedURLException, IOException {
         HttpURLConnection connection;
 
         BufferedReader reader;
@@ -146,45 +167,46 @@ public class TelegramBotInteractor{
         StringBuffer responseContent = new StringBuffer();
 
         URL uri = new URL(url);
-        connection = (HttpURLConnection)uri.openConnection();
-            //Request SetUp
+        connection = (HttpURLConnection) uri.openConnection();
+        //Request SetUp
         connection.setRequestMethod(method);
         connection.setConnectTimeout(5000);
         connection.setReadTimeout(5000);
 
         int status = connection.getResponseCode();
 
-        if(status > 299){
+        if (status > 299) {
             reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 responseContent.append(line);
                 responseContent.append("\n");
             }
             reader.close();
-        }else{
+        } else {
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 responseContent.append(line);
                 responseContent.append("\n");
             }
             reader.close();
         }
-        connection.disconnect();;
+        connection.disconnect();
+        ;
 
         return responseContent.toString();
     }
 
-    public static String getChatId(String token, String chatName, String responseContent){
-        JSONArray arrays = new JSONArray(responseContent.substring(responseContent.indexOf("["), responseContent.length()-1).replaceAll("channel_post", "message"));
-        for(int i=0; i<arrays.length(); i++){
+    public static String getChatId(String token, String chatName, String responseContent) {
+        JSONArray arrays = new JSONArray(responseContent.substring(responseContent.indexOf("["), responseContent.length() - 1).replaceAll("channel_post", "message"));
+        for (int i = 0; i < arrays.length(); i++) {
             //RESULT->MESSAGE->CHAT
             JSONObject fullJson = arrays.getJSONObject(i);
             JSONObject firstParse = fullJson.getJSONObject("message");
             JSONObject secondParse = firstParse.getJSONObject("chat");
             String chatID = secondParse.get("id").toString();
-            if(secondParse.get("type").toString().equals("group") || secondParse.get("type").toString().equals("channel")){
+            if (secondParse.get("type").toString().equals("group") || secondParse.get("type").toString().equals("channel")) {
                 String chatNAME = secondParse.get("title").toString();
-                if(chatNAME.equals(chatName)){
+                if (chatNAME.equals(chatName)) {
                     return chatID;
                 }
             }
@@ -193,22 +215,22 @@ public class TelegramBotInteractor{
     }
 
     //FUNCTION IMPLEMENTATION FOR DIFFERENT TYPE RESTAPI
-    
-    public static void sendMessage(String message)throws MalformedURLException, IOException{
-        if(message.length() <= 4096){
+
+    public static void sendMessage(String message) throws MalformedURLException, IOException {
+        if (message.length() <= 4096) {
             getResponde(mainAPI + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + message, "POST");
-        }else{
+        } else {
             System.out.println("Bad Request: message is too long");
         }
     }
 
-    public static void sendVenue(String latitude, String longitude, String title, String address)throws MalformedURLException, IOException{
+    public static void sendVenue(String latitude, String longitude, String title, String address) throws MalformedURLException, IOException {
         getResponde(mainAPI + botToken + "/sendVenue?chat_id=" + chatID + "&latitude=" + latitude + "&longitude=" + longitude + "&title=" + title + "&address=" + address, "POST");
     }
 
-    public static void sendDocument()throws MalformedURLException, IOException{
+    public static void sendDocument() throws MalformedURLException, IOException {
         File tempFile = getFile();
-        if(tempFile != null) {
+        if (tempFile != null) {
             HttpEntity entity = MultipartEntityBuilder.create()
                     .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
                     .addTextBody("chat_id", chatID, ContentType.DEFAULT_BINARY)
@@ -221,43 +243,47 @@ public class TelegramBotInteractor{
 
             CloseableHttpClient client = HttpClientBuilder.create().build();
             HttpResponse response = client.execute(request);
-        }else{
+        } else {
             System.out.println("There is no file selected");
         }
     }
 
-    public static String getAvailableChats(String responseContent){
-        if(!botToken.equals("")) {
+    public static void sendContact(String phoneNumber, String firstName, String lastName)throws MalformedURLException, IOException{
+        getResponde(mainAPI + botToken + "/sendContact?chat_id=" + chatID + "&phone_number=" + phoneNumber + "&first_name=" + firstName + "&last_name=" + lastName, "POST");
+    }
+
+    public static String getAvailableChats(String responseContent) {
+        if (!botToken.equals("")) {
             ArrayList<String> availableChats = new ArrayList<String>();
-            JSONArray arrays = new JSONArray(responseContent.substring(responseContent.indexOf("["), responseContent.length()-1).replaceAll("channel_post", "message"));
-            for(int i=0; i<arrays.length(); i++){
+            JSONArray arrays = new JSONArray(responseContent.substring(responseContent.indexOf("["), responseContent.length() - 1).replaceAll("channel_post", "message"));
+            for (int i = 0; i < arrays.length(); i++) {
                 //RESULT->MESSAGE->CHAT
                 JSONObject fullJson = arrays.getJSONObject(i);
                 JSONObject firstParse = fullJson.getJSONObject("message");
                 JSONObject secondParse = firstParse.getJSONObject("chat");
-                if(secondParse.get("type").toString().equals("group") || secondParse.get("type").toString().equals("channel")){
+                if (secondParse.get("type").toString().equals("group") || secondParse.get("type").toString().equals("channel")) {
                     boolean chatAlreadyPresent = false;
-                    for(String s : availableChats){
-                        if(s.equals(secondParse.get("title").toString())){
+                    for (String s : availableChats) {
+                        if (s.equals(secondParse.get("title").toString())) {
                             chatAlreadyPresent = true;
                         }
                     }
-                    if(!chatAlreadyPresent){
+                    if (!chatAlreadyPresent) {
                         availableChats.add(secondParse.get("title").toString());
                     }
                 }
             }
             String info = "";
-            for(String s : availableChats){
+            for (String s : availableChats) {
                 info += s + "\n";
             }
             return info;
-        }else{
+        } else {
             return "Bot Token Not Setted";
         }
     }
 
-    public static File getFile(){
+    public static File getFile() {
         JFileChooser fc = new JFileChooser();
 
         /*FileNameExtensionFilter pdfFilter = new FileNameExtensionFilter("PDF Document", ".pdf");
@@ -268,23 +294,23 @@ public class TelegramBotInteractor{
         fc.setFileFilter(zipFilter);
         fc.setFileFilter(gifFilter);
         fc.setFileFilter(pdfFilter);*/
-        
+
         fc.setCurrentDirectory(new java.io.File("."));
         fc.setDialogTitle("Select a document...");
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fc.setAcceptAllFileFilterUsed(false);
 
-        if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             return fc.getSelectedFile();
         }
         return null;
     }
 
-    public static boolean isBotTokenValid()throws MalformedURLException, IOException{
-        String result = getResponde(mainAPI + botToken +  "/getMe", "POST");
+    public static boolean isBotTokenValid() throws MalformedURLException, IOException {
+        String result = getResponde(mainAPI + botToken + "/getMe", "POST");
         JSONObject in = new JSONObject(result);
         String isGood = in.get("ok").toString();
-        if(isGood.equals("true")){
+        if (isGood.equals("true")) {
             return true;
         }
         return false;
