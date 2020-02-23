@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 //import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -99,7 +99,10 @@ public class TelegramBotInteractor{
                 }
                 break;
             case "99":
-                available = false;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you shure to perform the closing?", "WARNING", JOptionPane.YES_NO_OPTION);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    available = false;
+                }
                 break;
                 default:
                 System.out.println("Not Supported Operation");
@@ -278,7 +281,7 @@ public class TelegramBotInteractor{
     }
 
     public static boolean isBotTokenValid()throws MalformedURLException, IOException{
-        String result = getResponde(mainAPI + botToken +  "/getUpdates", "POST");
+        String result = getResponde(mainAPI + botToken +  "/getMe", "POST");
         JSONObject in = new JSONObject(result);
         String isGood = in.get("ok").toString();
         if(isGood.equals("true")){
