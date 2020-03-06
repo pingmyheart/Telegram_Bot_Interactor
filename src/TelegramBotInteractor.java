@@ -55,9 +55,9 @@ public class TelegramBotInteractor {
                 case "2":
                     if (!botToken.equals("")) {
                         System.out.println("Available Chats:");
-                        System.out.println(getAvailableChats(getResponde(mainAPI + botToken + "/getUpdates", "POST")));
+                        System.out.println(getAvailableChats(getResponse(mainAPI + botToken + "/getUpdates", "POST")));
                         System.out.println("Type Chat Name");
-                        String tempChatID = getChatId(botToken, in.nextLine(), getResponde(mainAPI + botToken + "/getUpdates", "POST"));
+                        String tempChatID = getChatId(botToken, in.nextLine(), getResponse(mainAPI + botToken + "/getUpdates", "POST"));
                         if (tempChatID == null) {
                             System.out.println("No ChatID selected");
                             chatID = "";
@@ -168,7 +168,7 @@ public class TelegramBotInteractor {
         return false;
     }
 
-    public static String getResponde(String url, String method) throws MalformedURLException, IOException {
+    public static String getResponse(String url, String method) throws MalformedURLException, IOException {
         HttpURLConnection connection;
 
         BufferedReader reader;
@@ -227,14 +227,14 @@ public class TelegramBotInteractor {
 
     public static void sendMessage(String message) throws MalformedURLException, IOException {
         if (message.length() <= 4096) {
-            getResponde(mainAPI + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + message, "POST");
+            getResponse(mainAPI + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + message, "POST");
         } else {
             System.out.println("Bad Request: message is too long");
         }
     }
 
     public static void sendVenue(String latitude, String longitude, String title, String address) throws MalformedURLException, IOException {
-        getResponde(mainAPI + botToken + "/sendVenue?chat_id=" + chatID + "&latitude=" + latitude + "&longitude=" + longitude + "&title=" + title + "&address=" + address, "POST");
+        getResponse(mainAPI + botToken + "/sendVenue?chat_id=" + chatID + "&latitude=" + latitude + "&longitude=" + longitude + "&title=" + title + "&address=" + address, "POST");
     }
 
     public static void sendDocument() throws MalformedURLException, IOException {
@@ -258,7 +258,7 @@ public class TelegramBotInteractor {
     }
 
     public static void sendContact(String phoneNumber, String firstName, String lastName) throws MalformedURLException, IOException {
-        getResponde(mainAPI + botToken + "/sendContact?chat_id=" + chatID + "&phone_number=" + phoneNumber + "&first_name=" + firstName + "&last_name=" + lastName, "POST");
+        getResponse(mainAPI + botToken + "/sendContact?chat_id=" + chatID + "&phone_number=" + phoneNumber + "&first_name=" + firstName + "&last_name=" + lastName, "POST");
     }
 
     public static String getAvailableChats(String responseContent) {
@@ -316,7 +316,7 @@ public class TelegramBotInteractor {
     }
 
     public static boolean isBotTokenValid() throws MalformedURLException, IOException {
-        String result = getResponde(mainAPI + botToken + "/getMe", "POST");
+        String result = getResponse(mainAPI + botToken + "/getMe", "POST");
         JSONObject in = new JSONObject(result);
         String isGood = in.get("ok").toString();
         if (isGood.equals("true")) {
